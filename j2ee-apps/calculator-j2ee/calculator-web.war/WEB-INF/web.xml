@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+  <display-name>ATG Application</display-name>
+  <description>An ATG Application</description>
+
+  <!-- 
+     This is the name/value of the "parent web application", i.e. the name
+     of a web application, which has a SessionNameContextServlet defined in it
+     that will define the session scope for this web application. 
+     This definition is commented out here in the "main" web application, but
+     you could copy this init param setting into a child web application which
+     wanted to share the same session scope with this servlet.
+
+       <context-param>
+          <param-name>atg.session.parentContextName</param-name>
+          <param-value>/dyn</param-value>
+       </context-param>
+
+    -->
+  <!--
+       If context-root is set here, then ServletContextWebAppRegistry will use
+       this setting as the context-root for this WebApp.  This must match
+       the context-root setting in application.xml.
+    -->
+  <context-param>
+    <param-name>context-root</param-name>
+    <param-value>/calculator</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>atg.filter.PageFilterDebug</param-name>
+   <param-value>true</param-value>
+  </context-param>
+
+   <filter>
+    <filter-name>PageFilter</filter-name>
+    <filter-class>atg.filter.dspjsp.PageFilter</filter-class>
+   </filter>
+   <filter-mapping>
+    <filter-name>PageFilter</filter-name>
+    <url-pattern>*.jsp</url-pattern>
+   </filter-mapping>
+
+
+
+  <!-- 
+       Configure the Nucleus Servlet. This servlet definition is required
+       in each web application that uses dynamo functionality.  When mapped,
+       it exposes the nucleus component browser, but should not be
+       mapped to any paths on a live site.
+    -->
+  <servlet>
+    <servlet-name>NucleusServlet</servlet-name>
+    <servlet-class>atg.nucleus.servlet.NucleusServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <!-- 
+       This servlet exposes the admin server of dynamo as a servlet in your
+       application server.  It is not necessary, but useful to access the
+       nucleus component browser, dynamo's configuration manager, and
+       performance monitor
+    -->
+  <servlet>
+    <servlet-name>AdminProxyServlet</servlet-name>
+    <servlet-class>atg.nucleus.servlet.NucleusProxyServlet</servlet-class>
+    <init-param>
+      <param-name>proxyServletPath</param-name>
+      <param-value>/atg/dynamo/servlet/adminpipeline/AdminHandler</param-value>
+    </init-param>  
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+
+  <!--
+      This servlet exposes the dynamo servlet pipeline.  It is necessary if
+      you want to support serving JHTML pages on your site.  The context path
+      and servlet path used by this servlet are prepended onto all URLs
+      for JHTML pages on your site.
+    -->
+  <servlet>
+    <servlet-name>DynamoProxyServlet</servlet-name>
+    <servlet-class>atg.nucleus.servlet.NucleusProxyServlet</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+
+  <!-- 
+      This servlet must be defined in each web application which is designated
+      as a "main" web application (i.e. its context name is the value of
+      another web application's atg.session.parentContextName parameter). 
+      Typically this is the dyn.ear web app.
+    -->
+  <servlet>
+    <servlet-name>SessionNameContextServlet</servlet-name>
+    <servlet-class>atg.nucleus.servlet.SessionNameContextServlet</servlet-class>
+  </servlet>
+
+  <!-- 
+      This servlet handles special init-session requests issued by the ACC 
+      and the template email system.
+    -->
+  <servlet>
+    <servlet-name>InitSessionServlet</servlet-name>
+    <servlet-class>atg.nucleus.servlet.InitSessionServlet</servlet-class>
+  </servlet>
+
+  <!-- 
+    You can enable this for diagnostic purposes in case you have trouble
+    starting up other services, you can go directly to nucleus.  It will
+    allow you to directly access the component browser.  There
+    is no authentication on this though so do not enable it for a live site.
+  <servlet-mapping>
+    <servlet-name>NucleusServlet</servlet-name>
+    <url-pattern>/nucleus/*</url-pattern>
+  </servlet-mapping>
+  -->
+
+  <!-- Exposes dynamo's admin server -->
+  <servlet-mapping>
+    <servlet-name>AdminProxyServlet</servlet-name>
+    <url-pattern>/admin/*</url-pattern>
+  </servlet-mapping>
+
+  <!-- Exposes dynamo's pipleine for serving DSP pages -->
+  <servlet-mapping>
+    <servlet-name>DynamoProxyServlet</servlet-name>
+    <url-pattern>/dyn/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+     <servlet-name>InitSessionServlet</servlet-name>
+     <url-pattern>/init-session</url-pattern>
+  </servlet-mapping>
+
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+
+  <!-- Use the DSP Tag library in your jsp pages -->
+  <taglib>
+    <taglib-uri>/dspTaglib</taglib-uri>
+    <taglib-location>/WEB-INF/tld/dspjspTaglib1_0.tld</taglib-location>
+  </taglib>
+
+</web-app>
+<!-- @version $Id: //product/Eclipse/main/plugins/atg.project/templates/web.xml#1 $$Change: 425088 $ -->

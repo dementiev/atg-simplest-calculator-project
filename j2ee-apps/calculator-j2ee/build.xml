@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="{APP-NAME}" default="build.ear">
+
+<target name="build.war">
+
+ 	<war destfile="D:\ATG\ATG2007.3\Calculator/j2ee-apps/calculator-web.war" update="true" webxml="D:\ATG\ATG2007.3\Calculator/j2ee-apps/calculator-j2ee/calculator-web.war/WEB-INF/web.xml">
+	<fileset dir="D:\ATG\ATG2007.3\Calculator/j2ee-apps/calculator-j2ee/calculator-web.war">
+		<include name="**/*"/>
+		<exclude name="WEB-INF/web.xml"/>
+	</fileset>
+	</war>
+	<!--<place-holder-for-war-task/>-->
+ </target>
+
+<target name="build.ear" depends="build.war">
+  <ear destfile="D:\ATG\ATG2007.3\Calculator/j2ee-apps/calculator-j2ee.ear" appxml="D:\ATG\ATG2007.3\Calculator/j2ee-apps/calculator-j2ee/META-INF/application.xml">
+    <metainf dir="D:\ATG\ATG2007.3\Calculator/j2ee-apps/calculator-j2ee/META-INF" includes="DYNAMO-INF/**/*"/>
+    <fileset dir="D:\ATG\ATG2007.3\Calculator/j2ee-apps" includes="*.war,*.jar"/>
+  </ear>
+</target>
+</project>
+<!-- @version $Id: //product/Eclipse/main/plugins/atg.project/templates/build.xml#1 $$Change: 425088 $ -->

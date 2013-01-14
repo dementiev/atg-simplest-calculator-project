@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="D:/ATG/ATG2007.3/DSS/lib/resources.jar"/>
+	<classpathentry kind="lib" path="D:/ATG/ATG2007.3/DSS/lib/classes.jar"/>
+	<classpathentry kind="lib" path="D:/ATG/ATG2007.3/DPS/lib/resources.jar"/>
+	<classpathentry kind="lib" path="D:/ATG/ATG2007.3/DPS/lib/classes.jar"/>
+	<classpathentry kind="lib" path="D:/ATG/ATG2007.3/DAS/lib/resources.jar"/>
+	<classpathentry kind="lib" path="D:/ATG/ATG2007.3/DAS/lib/classes.jar"/>
+	<classpathentry kind="lib" path="D:/ATG/ATG2007.3/DAS/lib/servlet.jar"/>
+	<classpathentry kind="lib" path="D:/ATG/ATG2007.3/DAS/lib/ice.jar"/>
+	<classpathentry kind="lib" path="D:/ATG/ATG2007.3/DAS/solid/SolidDriver2.1.jar"/>
+	<classpathentry kind="lib" path="D:/ATG/ATG2007.3/DAS/lib/ehcache-1.5.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
